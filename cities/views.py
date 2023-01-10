@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import DetailView
 
+from cities.forms import HtmlForm, CityForm
 from cities.models import City
 
 
@@ -9,6 +10,11 @@ __all__ = (
 )
 
 def home(request, pk=None):
+	if request.method == "POST":
+		form = CityForm(request.POST)
+		if form.is_valid():
+			print(form.cleaned_data)
+			form.save()
 	# if pk:
 	# 	city = City.objects.filter(id=pk).first()
 	# 	city = City.objects.get(id=pk)
@@ -16,8 +22,9 @@ def home(request, pk=None):
 	#
 	# 	context = {'object': city}
 	# 	return render(request, 'cities/detail.html', context)
+	form = HtmlForm()
 	qs = City.objects.all()
-	context = {'object_list': qs}
+	context = {'object_list': qs, 'form': form}
 	return render(request, 'cities/home.html', context)
 
 class CityDetailView(DetailView):
