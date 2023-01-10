@@ -4,14 +4,5 @@
 {% block content %}
 <h1>Создание Города</h1>
 
-<dev class="row">
-    <dev class="col-md-4">
-        <form action="" method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-
-            <button type="submit" class="btn btn-primary">Сохранить</button>
-        </form>
-    </dev>
-</dev>
+{% include 'form.html' with button='Сохранить' %}
 {% endblock %}
