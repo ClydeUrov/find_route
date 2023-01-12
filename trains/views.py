@@ -16,7 +16,7 @@ __all__ = (
 
 def home(request, pk=None):
 	qs = Train.objects.all()
-	lst = Paginator(qs, 2)
+	lst = Paginator(qs, 5)
 	page_number = request.GET.get('page')
 	page_obj = lst.get_page(page_number)
 	context = {'page_obj': page_obj, }
@@ -24,7 +24,7 @@ def home(request, pk=None):
 
 
 class TrainListView(ListView):
-	paginate_by = 2
+	paginate_by = 5
 	model = Train
 	template_name = 'trains/home.html'
 
