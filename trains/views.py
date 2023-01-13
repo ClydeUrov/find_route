@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import DetailView, CreateView, UpdateView, DeleteView, ListView
 from django.contrib import messages
-# from trains.forms import HtmlForm, TrainForm
+from trains.forms import TrainForm
 from trains.models import Train
 
 
