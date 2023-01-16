@@ -48,7 +48,7 @@ def get_routes(request, form) -> dict:
             raise ValueError('Маршрут через эти города невозможен')
     else:
         right_ways = all_ways
-    trains = []
+    routes = []
     all_trains = {}
     print(qs)
     for q in qs:
@@ -63,14 +63,28 @@ def get_routes(request, form) -> dict:
             qs = all_trains[(route[i], route[i + 1])]
             q = qs[0]
             total_time += q.travel_time
-            tmp['trains'].append(qs)
+            tmp['trains'].append(q)
         tmp['total_time'] = total_time
         print(tmp)
         if total_time <= travelling_time:
-            trains.append(tmp)
-        print(trains)
-    if not trains:
+            # Если общее время в пути меньше заданного,
+            # то добавляет маршрут в общий список.
+            routes.append(tmp)
+        print(routes)
+    if not routes:
+        # Если список пуст, то нет никаких маршрутов,
+        # которые удовлетворяли бы заданным условиям.
         raise ValueError('Время в пути больше заданного')
-
-
+    sorted_routes = []
+    if len(routes) == 1:
+        sorted_routes = routes
+    else:
+        times = list(set(r['total_time'] for r in routes))
+        times = sorted(times)
+        for time in times:
+            for route in routes:
+                if time == route['total_time']:
+                    sorted_routes.append(route)
+    context['routes'] = sorted_routes
+    context['cities'] = {'from_city': from_city.name, 'to_city': to_city.name}
     return context
