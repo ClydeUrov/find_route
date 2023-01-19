@@ -44,6 +44,15 @@
                 <li><a class="dropdown-item" href="{% url 'trains:create'%}">Новый поезд</a></li>
               </ul>
             </li>
+            {% if user.is_authenticated %}
+              <li class="nav-item">
+              <a class="nav-link" href="{% url 'accounts:logout'%}">Выйти</a>
+            </li>
+            {% else %}
+              <li class="nav-item">
+              <a class="nav-link" href="{% url 'accounts:login'%}">Войти</a>
+            </li>
+            {% endif %}
           </ul>
         </div>
       </div>
